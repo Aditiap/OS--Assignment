@@ -50,14 +50,14 @@ Using this method of calculation we get the following table as a result:<br />
 
 Need
 ----
-P  &nbsp;   | 	A |	B |	C |	D <br />
+P  &nbsp;&nbsp;   | 	A |	B |	C |	D <br />
 P0 &nbsp;   |	0 |	0 |	0 |	0 <br />
 P0 &nbsp;   | 	0 |	0 |	0 |	0 <br />
 P1 &nbsp;   |	0 |	7 |	5 |	0 <br />
 P2 &nbsp;   |	1 |	0 |	0 |	2 <br />
 P3 &nbsp;   |	0 |	0 |	2 |	0 <br />
 P4 &nbsp;   |	0 |	6 |	4 |	2 <br />
-Total  |	1 |	13|	11|	4 <br />
+Total&nbsp;  |	1 |	13|	11|	4 <br />
 
 b. Is the system in a safe state?
 A system is in a safe state if the amount of resources needed does not exceed the amount of resources available.
