@@ -25,37 +25,38 @@ be safe from concurrent access. To ensure safe access to shared data, you can us
 
 ## Banker's Algorithm Concept 
 
-1.1: There are three major methods for handling deadlock. (See Chapter 7.3.1). But actually there are four. Describe these four methods for handling deadlock.
+1.1: There are three major methods for handling deadlock. But actually there are four. Describe these four methods for handling deadlock.<br />
 
-    Use a protocol to prevent deadlock, Deadlock Prevention. This ensures that the system will never even enter a deadlocked state in the first place. (by for example using mutual exclusion)
-    Allow the system to enter a deadlocked state, but develop a mechanism to detect this and recover from it. This is called Deadlock Detection
-    Ignore deadlocks and pretend they will never occur in the system.
-    Avoiding a deadlock altogether by making the system calculate if any request will leave the system in a 'safe state'. Deadlock Avoidance
+    1)Use a protocol to prevent deadlock, Deadlock Prevention. This ensures that the system will never even       enter a deadlocked state in the first place. (by for example using mutual exclusion)<br />
+    2)Allow the system to enter a deadlocked state, but develop a mechanism to detect this and recover from it.   This is called Deadlock Detection <br />
+    3)Ignore deadlocks and pretend they will never occur in the system.<br />
+    4)Avoiding a deadlock altogether by making the system calculate if any request will leave the system in a     'safe state'. Deadlock Avoidance <br />
 
-1.2: Consider the following snapshot of a system.
+1.2: Consider the following snapshot of a system.<br />
 
-images/snapshot1-2.png
-Answer the following questions using the banker's algorithm:
+Answer the following questions using the banker's algorithm:<br />
 
-a. What is the content of the matrix Need?
+a. What is the content of the matrix Need?<br />
 
-Need[i,j] = Max[i,j] - Allocation[i,j]. So starting with resource A:
-P0 = 0 - 0 = 0
-P1 = 1 - 1 = 0
-P2 = 2 - 1 = 1
-P3 = 0 - 0 = 0
-P4 = 0 = 0 = 0
+Need[i,j] = Max[i,j] - Allocation[i,j]. So starting with resource A:<br />
+P0 = 0 - 0 = 0 <br />
+P1 = 1 - 1 = 0 <br />
+P2 = 2 - 1 = 1 <br />
+P3 = 0 - 0 = 0 <br />
+P4 = 0 = 0 = 0 <br />
 
-Using this method of calculation we get the following table as a result:
+
+Using this method of calculation we get the following table as a result:<br />
 
 Need
-P     	A 	B 	C 	D
-P0    	0 	0 	0 	0
-P1    	0 	7 	5 	0
-P2    	1 	0 	0 	2
-P3    	0 	0 	2 	0
-P4    	0 	6 	4 	2
-Total 	1 	13 	11 	4
+P     	A 	B 	C 	D <br />
+P0    	0 	0 	0 	0 <br />
+P0    	0 	0 	0 	0 <br />
+P1    	0 	7 	5 	0 <br />
+P2    	1 	0 	0 	2 <br />
+P3    	0 	0 	2 	0 <br />
+P4    	0 	6 	4 	2 <br />
+Total 	1 	13 	11 	4 <br />
 
 b. Is the system in a safe state?
 A system is in a safe state if the amount of resources needed does not exceed the amount of resources available.
