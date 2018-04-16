@@ -1,4 +1,4 @@
-## OS--Assignment
+# OS--Assignment
 
 **QUESTION**.<br />
 
@@ -21,6 +21,9 @@ be safe from concurrent access. To ensure safe access to shared data, you can us
     8.(kindly go through the question before making a change request). But only six students can get their question changed. The decision to change the question will be done on First Come First Serve basis.<br />
        
   ------------------------------------------------------------------------------------------------------------------------------
+
+
+## Banker's Algorithm Concept 
 
 1.1: There are three major methods for handling deadlock. (See Chapter 7.3.1). But actually there are four. Describe these four methods for handling deadlock.
 
