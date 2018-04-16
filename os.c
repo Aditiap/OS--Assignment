@@ -1,133 +1,148 @@
-// C++ program to illustrate Banker's Algorithm
-#include<iostream>
-using namespace std;
+#include <stdio.h>
  
-// Number of processes
-const int P = 5;
+int current[5][5], maximum_claim[5][5], available[5];
+int allocation[5] = {0, 0, 0, 0, 0};
+int maxres[5], running[5], safe = 0;
+int counter = 0, i, j, exec, resources, processes, k = 1;
  
-// Number of resources
-const int R = 3;
- 
-// Function to find the need of each process
-void calculateNeed(int need[P][R], int maxm[P][R],
-                   int allot[P][R])
+int main()
 {
-    // Calculating Need of each P
-    for (int i = 0 ; i < P ; i++)
-        for (int j = 0 ; j < R ; j++)
+    printf("\nEnter number of processes: ");
+        scanf("%d", &processes);
  
-            // Need of instance = maxm instance -
-            //                    allocated instance
-            need[i][j] = maxm[i][j] - allot[i][j];
-}
- 
-// Function to find the system is in safe state or not
-bool isSafe(int processes[], int avail[], int maxm[][R],
-            int allot[][R])
-{
-    int need[P][R];
- 
-    // Function to calculate need matrix
-    calculateNeed(need, maxm, allot);
- 
-    // Mark all processes as infinish
-    bool finish[P] = {0};
- 
-    // To store safe sequence
-    int safeSeq[P];
- 
-    // Make a copy of available resources
-    int work[R];
-    for (int i = 0; i < R ; i++)
-        work[i] = avail[i];
- 
-    // While all processes are not finished
-    // or system is not in safe state.
-    int count = 0;
-    while (count < P)
+        for (i = 0; i < processes; i++) 
     {
-        // Find a process which is not finish and
-        // whose needs can be satisfied with current
-        // work[] resources.
-        bool found = false;
-        for (int p = 0; p < P; p++)
+            running[i] = 1;
+            counter++;
+        }
+ 
+        printf("\nEnter number of resources: ");
+        scanf("%d", &resources);
+ 
+        printf("\nEnter Claim Vector:");
+        for (i = 0; i < resources; i++) 
+    { 
+            scanf("%d", &maxres[i]);
+        }
+ 
+       printf("\nEnter Allocated Resource Table:\n");
+        for (i = 0; i < processes; i++) 
+    {
+            for(j = 0; j < resources; j++) 
         {
-            // First check if a process is finished,
-            // if no, go for next condition
-            if (finish[p] == 0)
-            {
-                // Check if for all resources of
-                // current P need is less
-                // than work
-                int j;
-                for (j = 0; j < R; j++)
-                    if (need[p][j] > work[j])
-                        break;
- 
-                // If all needs of p were satisfied.
-                if (j == R)
-                {
-                    // Add the allocated resources of
-                    // current P to the available/work
-                    // resources i.e.free the resources
-                    for (int k = 0 ; k < R ; k++)
-                        work[k] += allot[p][k];
- 
-                    // Add this process to safe sequence.
-                    safeSeq[count++] = p;
- 
-                    // Mark this p as finished
-                    finish[p] = 1;
- 
-                    found = true;
-                }
+              scanf("%d", &current[i][j]);
             }
         }
  
-        // If we could not find a next process in safe
-        // sequence.
-        if (found == false)
+        printf("\nEnter Maximum Claim Table:\n");
+        for (i = 0; i < processes; i++) 
+    {
+            for(j = 0; j < resources; j++) 
         {
-            cout << "System is not in safe state";
-            return false;
+                    scanf("%d", &maximum_claim[i][j]);
+            }
         }
+ 
+    printf("\nThe Claim Vector is: ");
+        for (i = 0; i < resources; i++) 
+    {
+            printf("\t%d", maxres[i]);
     }
  
-    // If system is in safe state then
-    // safe sequence will be as below
-    cout << "System is in safe state.\nSafe"
-         " sequence is: ";
-    for (int i = 0; i < P ; i++)
-        cout << safeSeq[i] << " ";
+        printf("\nThe Allocated Resource Table:\n");
+        for (i = 0; i < processes; i++) 
+    {
+            for (j = 0; j < resources; j++) 
+        {
+                    printf("\t%d", current[i][j]);
+            }
+        printf("\n");
+        }
  
-    return true;
-}
+        printf("\nThe Maximum Claim Table:\n");
+        for (i = 0; i < processes; i++) 
+    {
+            for (j = 0; j < resources; j++) 
+        {
+                printf("\t%d", maximum_claim[i][j]);
+            }
+            printf("\n");
+        }
  
-// Driver code
-int main()
-{
-    int processes[] = {0, 1, 2, 3, 4};
+        for (i = 0; i < processes; i++) 
+    {
+            for (j = 0; j < resources; j++) 
+        {
+                    allocation[j] += current[i][j];
+            }
+        }
  
-    // Available instances of resources
-    int avail[] = {3, 3, 2};
+        printf("\nAllocated resources:");
+        for (i = 0; i < resources; i++) 
+    {
+            printf("\t%d", allocation[i]);
+        }
  
-    // Maximum R that can be allocated
-    // to processes
-    int maxm[][R] = {{7, 5, 3},
-                     {3, 2, 2},
-                     {9, 0, 2},
-                     {2, 2, 2},
-                     {4, 3, 3}};
+        for (i = 0; i < resources; i++) 
+    {
+            available[i] = maxres[i] - allocation[i];
+    }
  
-    // Resources allocated to processes
-    int allot[][R] = {{0, 1, 0},
-                      {2, 0, 0},
-                      {3, 0, 2},
-                      {2, 1, 1},
-                      {0, 0, 2}};
+        printf("\nAvailable resources:");
+        for (i = 0; i < resources; i++) 
+    {
+            printf("\t%d", available[i]);
+        }
+        printf("\n");
  
-    // Check system is in safe state or not
-    isSafe(processes, avail, maxm, allot);
+        while (counter != 0) 
+    {
+            safe = 0;
+            for (i = 0; i < processes; i++) 
+        {
+                    if (running[i]) 
+            {
+                        exec = 1;
+                        for (j = 0; j < resources; j++) 
+                {
+                                if (maximum_claim[i][j] - current[i][j] > available[j]) 
+                    {
+                                    exec = 0;
+                                    break;
+                                }
+                        }
+                        if (exec) 
+                {
+                                printf("\nProcess%d is executing\n", i + 1);
+                                running[i] = 0;
+                                counter--;
+                                safe = 1;
  
-    return 0;
+                                for (j = 0; j < resources; j++) 
+                    {
+                                    available[j] += current[i][j];
+                                }
+                            break;
+                        }
+                    }
+            }
+            if (!safe) 
+        {
+                    printf("\nThe processes are in unsafe state.\n");
+                    break;
+            } 
+        else 
+        {
+                    printf("\nThe process is in safe state");
+                    printf("\nAvailable vector:");
+ 
+                    for (i = 0; i < resources; i++) 
+            {
+                        printf("\t%d", available[i]);
+                    }
+ 
+                printf("\n");
+            }
+        }
+        return 0;
 }
