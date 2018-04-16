@@ -9,7 +9,7 @@ be safe from concurrent access. To ensure safe access to shared data, you can us
 --------------------------------------------------------------------------------------------------------------------------------
 
 
-**Instructions**
+**Instructions**<br />
     1. This assignment is a compulsory CA component.<br />
     2. The assignment is to be done on individual basis (no groups).<br />
     3. The assignment submission mode is Online only. Student has to upload the assignment on or before the last date on UMS only. 
@@ -22,3 +22,50 @@ be safe from concurrent access. To ensure safe access to shared data, you can us
        
   ------------------------------------------------------------------------------------------------------------------------------
 
+1.1: There are three major methods for handling deadlock. (See Chapter 7.3.1). But actually there are four. Describe these four methods for handling deadlock.
+
+    Use a protocol to prevent deadlock, Deadlock Prevention. This ensures that the system will never even enter a deadlocked state in the first place. (by for example using mutual exclusion)
+    Allow the system to enter a deadlocked state, but develop a mechanism to detect this and recover from it. This is called Deadlock Detection
+    Ignore deadlocks and pretend they will never occur in the system.
+    Avoiding a deadlock altogether by making the system calculate if any request will leave the system in a 'safe state'. Deadlock Avoidance
+
+1.2: Consider the following snapshot of a system.
+
+images/snapshot1-2.png
+Answer the following questions using the banker's algorithm:
+
+a. What is the content of the matrix Need?
+
+Need[i,j] = Max[i,j] - Allocation[i,j]. So starting with resource A:
+P0 = 0 - 0 = 0
+P1 = 1 - 1 = 0
+P2 = 2 - 1 = 1
+P3 = 0 - 0 = 0
+P4 = 0 = 0 = 0
+
+Using this method of calculation we get the following table as a result:
+
+Need
+P     	A 	B 	C 	D
+P0    	0 	0 	0 	0
+P1    	0 	7 	5 	0
+P2    	1 	0 	0 	2
+P3    	0 	0 	2 	0
+P4    	0 	6 	4 	2
+Total 	1 	13 	11 	4
+
+b. Is the system in a safe state?
+A system is in a safe state if the amount of resources needed does not exceed the amount of resources available.
+           	A 	B 	C 	D
+Available 	1 	5 	2 	0
+
+Yes, the system is ** in a safe state**. The amount of resources needed for either Process 3 or Process 0 to run does not exceed the amount of resources available.
+
+c. If a request from process Pi arrives for (0, 4, 2, 0), can the request be granted immediately?
+Yes, Pi would be safe to grant resources immediately because 0, 4, 2, 0 does not exceed the available 1, 5, 2, 0 because:
+                 	A 	B 	C 	D
+Need Pi         	0 	4 	2 	0
+Available        	1 	5 	2 	0
+Available - Need 	1 	1 	0 	0
+
+The amount of 'needed' resources for Pi does not exceed the amount of available resources.
